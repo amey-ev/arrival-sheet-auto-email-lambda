@@ -1,0 +1,16 @@
+{
+  "name": "arrival-email-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^5.5.3",
+    "nodemailer": "^6.9.7",
+    "q": "^1.5.1"
+  }
+}
