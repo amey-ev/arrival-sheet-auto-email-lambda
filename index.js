@@ -6,7 +6,7 @@ const gets3CSVData = require("./utils/gets3CSVData");
 const fillMissingDates = require("./utils/fillMissingDates");
 const checkIfEmpIsPresentAllDay = require("./utils/checkIfEmpIsPresentAllDay");
 const generateEmpNotPresentTemplate = require("./utils/generateEmpNotPresentTemplate");
-const sendEmail = require("./utils/sendEmail");
+const sendSESEmails = require("./utils/sendSESEmail");
 
 exports.handler = async (event) => {
   try {
@@ -26,7 +26,7 @@ exports.handler = async (event) => {
       ...new Map(s3Object.map((item) => [item[arrayUniqueKey], item])).values(),
     ];
 
-    arrayUniqueByKey.forEach((datum) => {
+    arrayUniqueByKey.forEach(async (datum) => {
       const employeeId = datum[arrayUniqueKey];
       const employeeName = datum["Employee Name"] || "-";
       let weekRange = "-";
@@ -42,8 +42,13 @@ exports.handler = async (event) => {
       );
       let timeSheetWithMissingDates = timeSheetDataWithMissingDays;
       if (checkIfEmpIsPresentAllDay(timeSheetDataWithMissingDays)) {
-        console.log("Not Found: ", timeSheetDataWithMissingDays);
-        emailTemplate = generateEmpNotPresentTemplate(employeeName);
+        const { missingDateEmailTemplate, missingDateWeekRange } =
+          generateEmpNotPresentTemplate(
+            timeSheetDataWithMissingDays,
+            employeeName
+          );
+        emailTemplate = missingDateEmailTemplate;
+        weekRange = missingDateWeekRange;
       } else {
         timeSheetWithMissingDates = fillMissingDates(
           timeSheetDataWithMissingDays
@@ -68,32 +73,14 @@ exports.handler = async (event) => {
       });
     });
 
-    //* Added this  to restrict only few mails due to SES contraint
-    let shouldSkip = false;
-    const slicedSendEmailArray = sendEmailArray.slice(0, 10); //Todo: Remove
-    slicedSendEmailArray.forEach(async (element, index) => {
-      // Replace slicedSendEmailArray with sendEmailArray
-      //Todo: Remove this block after testing
-      if (shouldSkip) {
-        return;
-      }
-      if (index > 5) {
-        shouldSkip = true;
-        return;
-      }
-      if (element.rmEmail !== "-") {
-        const emailParams = {
-          mailTitle: `Weekly Attendance Report of ${element?.employeeName} for [${element?.weekRange}]`,
-          message: element?.emailTemplate || "-",
-          senderEmail: "bhogaonkaramey@gmail.com", //Todo:  change this to sender mail
-          senderName: "Amey",
-          receiverEmail: "bhogaonkaramey@gmail.com", //Todo: change this to element.rmEmail
-          receiverName: element?.rmName || "-",
-        };
-        const sendEmailResponse = await sendEmail(emailParams);
-        console.log("sendEmailResponse: ", JSON.stringify(sendEmailResponse)); //Todo: Remove
-      }
-      console.log(`${element?.employeeName} has missing Reporting Details`);
+    //!  Sends Email
+    sendEmailArray.forEach(async (element) => {
+      await sendSESEmails({
+        toAddresses: "amey.bhogaonkar@everestek.com",
+        source: "hubnotifications@everestek.com",
+        subject: `Weekly Attendance Report of ${element?.employeeName} for [${element?.weekRange}]`,
+        htmlTemplate: element?.emailTemplate || "-",
+      });
     });
 
     return {

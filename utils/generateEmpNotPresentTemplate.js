@@ -35,7 +35,13 @@ const generateEmpNotPresentTemplate = (inputArray, employeeName) => {
     updatedWithDates,
     employeeName
   );
-  return employeeNotPresentTemplate.replace(/\n/g, "");
+  const firstDayOfWeek = lastWeekDateArray[0];
+  const lastDayOfWeek = lastWeekDateArray[lastWeekDateArray.length - 1];
+  weekRange = `${firstDayOfWeek} to ${lastDayOfWeek}`;
+  return {
+    missingDateEmailTemplate: employeeNotPresentTemplate.replace(/\n/g, ""),
+    missingDateWeekRange: weekRange,
+  };
 };
 
 module.exports = generateEmpNotPresentTemplate;
