@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && esbuild index.js --bundle --platform=node --minify --sourcemap --external:@aws-sdk/client-ses --external:@aws-sdk/client-s3 --outdir=dist"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "csv-parse": "^5.5.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.10"
   }
 }
