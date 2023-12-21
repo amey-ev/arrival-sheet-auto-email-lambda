@@ -73,7 +73,6 @@ exports.handler = async (event) => {
       });
     });
     const slicedEmailArray = sendEmailArray.slice(0, 7);
-
     for (const email of slicedEmailArray) {
       //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
       await sendSESEmails({
@@ -83,7 +82,6 @@ exports.handler = async (event) => {
         htmlTemplate: email?.emailTemplate || "-",
       });
     }
-
     return {
       statusCode: 200,
       body: JSON.stringify({ message: "Email Sent Successfully" }),
