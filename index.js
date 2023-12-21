@@ -72,16 +72,17 @@ exports.handler = async (event) => {
         weekRange,
       });
     });
+    const slicedEmailArray = sendEmailArray.slice(0, 7);
 
-    //!  Sends Email
-    sendEmailArray.forEach(async (element) => {
+    for (const email of slicedEmailArray) {
+      //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
       await sendSESEmails({
         toAddresses: "amey.bhogaonkar@everestek.com",
         source: "hubnotifications@everestek.com",
-        subject: `Weekly Attendance Report of ${element?.employeeName} for [${element?.weekRange}]`,
-        htmlTemplate: element?.emailTemplate || "-",
+        subject: `Weekly Attendance Report of ${email?.employeeName} for [${email?.weekRange}]`,
+        htmlTemplate: email?.emailTemplate || "-",
       });
-    });
+    }
 
     return {
       statusCode: 200,
