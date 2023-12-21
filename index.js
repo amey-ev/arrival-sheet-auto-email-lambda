@@ -63,7 +63,10 @@ exports.handler = async (event) => {
         weekRange = `${firstDayOfWeek} to ${lastDayOfWeek}`;
       }
 
-      const rmEmail = getRMEmail(parseInt(employeeId), resourceDetails);
+      const { rmEmail, empEmail } = getRMEmail(
+        parseInt(employeeId),
+        resourceDetails
+      );
       sendEmailArray.push({
         employeeName,
         emailTemplate,
@@ -75,8 +78,9 @@ exports.handler = async (event) => {
     const slicedEmailArray = sendEmailArray.slice(0, 7);
     for (const email of slicedEmailArray) {
       //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
+      //TODO: At prod. change the toAddress to email.rmEmail & the email.empEmail
       await sendSESEmails({
-        toAddresses: "amey.bhogaonkar@everestek.com",
+        toAddresses: "amey.bhogaonkar@everestek.com", //* Ex. toAddress: [email.rmEmail, email.empEmail]
         source: "hubnotifications@everestek.com",
         subject: `Weekly Attendance Report of ${email?.employeeName} for [${email?.weekRange}]`,
         htmlTemplate: email?.emailTemplate || "-",
