@@ -78,12 +78,12 @@ exports.handler = async (event) => {
     const slicedEmailArray = sendEmailArray.slice(0, 7);
     for (const email of slicedEmailArray) {
       //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
-      //TODO: At prod. change the toAddress to email.rmEmail & the email.empEmail
+      //TODO: At prod. change the toAddresses to rmEmail,empEmail
       await sendSESEmails({
         toAddresses: [
           "amey.bhogaonkar@everestek.com",
           "rahul.varma@everestek.com",
-        ], //* Ex. toAddress: [email.rmEmail, email.empEmail]
+        ], //* Ex. toAddress: [rmEmail, empEmail]
         source: "hubnotifications@everestek.com",
         subject: `Weekly Attendance Report of ${email?.employeeName} for [${email?.weekRange}]`,
         htmlTemplate: email?.emailTemplate || "-",
