@@ -80,7 +80,10 @@ exports.handler = async (event) => {
       //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
       //TODO: At prod. change the toAddress to email.rmEmail & the email.empEmail
       await sendSESEmails({
-        toAddresses: "amey.bhogaonkar@everestek.com", //* Ex. toAddress: [email.rmEmail, email.empEmail]
+        toAddresses: [
+          "amey.bhogaonkar@everestek.com",
+          "rahul.varma@everestek.com",
+        ], //* Ex. toAddress: [email.rmEmail, email.empEmail]
         source: "hubnotifications@everestek.com",
         subject: `Weekly Attendance Report of ${email?.employeeName} for [${email?.weekRange}]`,
         htmlTemplate: email?.emailTemplate || "-",

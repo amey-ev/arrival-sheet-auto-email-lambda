@@ -49,44 +49,55 @@ const generateTimeSheetTableTemplate = (employeeTimeArray, employeeName) => {
             </tr>
           </thead>
           <tbody>
-            ${employeeTimeArray
-              .map(
-                (employee) => `
-              <tr style="border: 1px solid #000000;">
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee?.Date || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee?.Day || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["Employee Number"] || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["Employee Name"] || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["Reporting Manager"] || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["Type"] || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["In Time"] || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["Out Time"] || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["Effective Hours"] || "-"
-                }</td>
-                <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                  employee["Total Hours"] || "-"
-                }</td>
-              </tr>
-            `
-              )
-              .join("")}
+              ${employeeTimeArray
+                .map((employee) => {
+                  let calculatedType = "-";
+                  if (
+                    employee["In Time"] !== "--" &&
+                    employee["Out Time"] !== "--"
+                  ) {
+                    calculatedType = "WFO";
+                  } else {
+                    calculatedType = "WFO/WFH/Leave";
+                    employee["In Time"] = "00:00";
+                    employee["Out Time"] = "00:00";
+                    employee["Effective Hours"] = "00:00";
+                    employee["Total Hours"] = "00:00";
+                  }
+                  return `
+                    <tr style="border: 1px solid #000000;">
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee?.Date || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee?.Day || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee["Employee Number"] || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee["Employee Name"] || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee["Reporting Manager"] || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${calculatedType}</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee["In Time"] || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee["Out Time"] || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee["Effective Hours"] || "-"
+                      }</td>
+                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                        employee["Total Hours"] || "-"
+                      }</td>
+                    </tr>
+                  `;
+                })
+                .join("")}
           </tbody>
         </table>
         <p>
