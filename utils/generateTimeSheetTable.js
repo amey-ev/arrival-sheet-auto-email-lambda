@@ -1,10 +1,25 @@
-const generateTimeSheetTableTemplate = (employeeTimeArray, employeeName) => {
+// TODO: Commented Employee Number, Employee Name, Reporting Manager
+// {/* <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+//                         employee["Employee Number"] || "-"
+//                       }</td>
+//                       <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+//                         employee["Employee Name"] || "-"
+//                       }</td>
+//                       <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+//                         employee["Reporting Manager"] || "-"
+//                       }</td> */}
+const generateTimeSheetTableTemplate = (
+  employeeTimeArray,
+  employeeName,
+  reportingManagerName,
+  employeeId
+) => {
   const tableHeaders = [
     "Date",
     "Day",
-    "Employee ID",
-    "Employee Name",
-    "Reporting Manager Name",
+    // "Employee ID",
+    // "Employee Name",
+    // "Reporting Manager Name",
     "WFO/WFH/Leave",
     "In-Time",
     "Out-Time",
@@ -35,6 +50,12 @@ const generateTimeSheetTableTemplate = (employeeTimeArray, employeeName) => {
       <body style="display: block";>
         <p>
           Hi ${employeeName}, Attached is your weekly attendance report for your review. This report will also be shared with your Resource Manager for their records.
+        </p>
+        <p>
+          <b>Reporting Manager :</b> ${reportingManagerName}
+        </p>
+        <p>
+          <b>Employee Id :</b> ${employeeId}
         </p>
         <table style="width: 100%; border-collapse: collapse;">
           <thead>
@@ -71,15 +92,6 @@ const generateTimeSheetTableTemplate = (employeeTimeArray, employeeName) => {
                       }</td>
                       <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
                         employee?.Day || "-"
-                      }</td>
-                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                        employee["Employee Number"] || "-"
-                      }</td>
-                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                        employee["Employee Name"] || "-"
-                      }</td>
-                      <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
-                        employee["Reporting Manager"] || "-"
                       }</td>
                       <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${calculatedType}</td>
                       <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${

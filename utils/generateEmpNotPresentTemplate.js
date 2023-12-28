@@ -25,7 +25,12 @@ const getLastWeekDateRange = () => {
   return lastWeekDates;
 };
 
-const generateEmpNotPresentTemplate = (inputArray, employeeName) => {
+const generateEmpNotPresentTemplate = (
+  inputArray,
+  employeeName,
+  reportingManagerName,
+  employeeId
+) => {
   const lastWeekDateArray = getLastWeekDateRange();
   const updatedWithDates = inputArray.map((employee, index) => ({
     ...employee,
@@ -33,7 +38,9 @@ const generateEmpNotPresentTemplate = (inputArray, employeeName) => {
   }));
   const employeeNotPresentTemplate = generateTimeSheetTableTemplate(
     updatedWithDates,
-    employeeName
+    employeeName,
+    reportingManagerName,
+    employeeId
   );
   const firstDayOfWeek = lastWeekDateArray[0];
   const lastDayOfWeek = lastWeekDateArray[lastWeekDateArray.length - 1];

@@ -29,6 +29,7 @@ exports.handler = async (event) => {
     arrayUniqueByKey.forEach(async (datum) => {
       const employeeId = datum[arrayUniqueKey];
       const employeeName = datum["Employee Name"] || "-";
+      const reportingManagerName = datum["Reporting Manager"] || "";
       let weekRange = "-";
       const employeeReportingManagerName = datum["Reporting Manager"];
       const filteredDataFromTimeSheet = s3Object.filter((datum) => {
@@ -45,7 +46,9 @@ exports.handler = async (event) => {
         const { missingDateEmailTemplate, missingDateWeekRange } =
           generateEmpNotPresentTemplate(
             timeSheetDataWithMissingDays,
-            employeeName
+            employeeName,
+            reportingManagerName,
+            employeeId
           );
         emailTemplate = missingDateEmailTemplate;
         weekRange = missingDateWeekRange;
@@ -55,7 +58,9 @@ exports.handler = async (event) => {
         );
         emailTemplate = generateTimeSheetTableTemplate(
           timeSheetWithMissingDates,
-          employeeName
+          employeeName,
+          reportingManagerName,
+          employeeId
         );
         const firstDayOfWeek = timeSheetWithMissingDates[0]?.Date;
         const lastDayOfWeek =
@@ -75,14 +80,14 @@ exports.handler = async (event) => {
         weekRange,
       });
     });
-    const slicedEmailArray = sendEmailArray.slice(0, 7);
+    const slicedEmailArray = sendEmailArray.slice(0, 3);
     for (const email of slicedEmailArray) {
       //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
       //TODO: At prod. change the toAddresses to rmEmail,empEmail
       await sendSESEmails({
         toAddresses: [
           "amey.bhogaonkar@everestek.com",
-          "rahul.varma@everestek.com",
+          // "rahul.varma@everestek.com",
         ], //* Ex. toAddress: [rmEmail, empEmail]
         source: "hubnotifications@everestek.com",
         subject: `${email?.employeeName} - Weekly Attendance Report [${email?.weekRange}]`,
