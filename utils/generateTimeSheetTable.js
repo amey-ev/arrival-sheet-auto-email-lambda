@@ -48,7 +48,7 @@ const generateTimeSheetTableTemplate = (
             ${tableHeaders
               .map(
                 (header) => `
-                <th style="border: 1px solid #000000;padding:4px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${header}</th>
+                <th style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${header}</th>
             `
               )
               .join("")}
@@ -72,23 +72,23 @@ const generateTimeSheetTableTemplate = (
                   }
                   return `
                     <tr style="border: 1px solid #000000;">
-                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${
                         employee?.Date || "-"
                       }</td>
-                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${
                         employee?.Day || "-"
                       }</td>
-                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;">${calculatedType}</td>
-                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${calculatedType}</td>
+                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${
                         employee["In Time"] || "-"
                       }</td>
-                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${
                         employee["Out Time"] || "-"
                       }</td>
-                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${
                         employee["Effective Hours"] || "-"
                       }</td>
-                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;">${
+                      <td style="border: 1px solid #000000;padding:4px;text-align: center; vertical-align: middle; border: 1px solid #000000;font-size: 14px;">${
                         employee["Total Hours"] || "-"
                       }</td>
                     </tr>
