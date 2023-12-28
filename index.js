@@ -77,21 +77,25 @@ exports.handler = async (event) => {
         emailTemplate,
         rmEmail,
         rmName: employeeReportingManagerName,
+        empEmail,
         weekRange,
       });
     });
-    const slicedEmailArray = sendEmailArray.slice(0, 3);
-    for (const email of slicedEmailArray) {
+
+    for (const email of sendEmailArray) {
       //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
       //TODO: At prod. change the toAddresses to rmEmail,empEmail
+      const { rmEmail, empEmail, employeeName, weekRange, emailTemplate } =
+        email;
+      console.log("Template: ", emailTemplate);
       await sendSESEmails({
         toAddresses: [
           "amey.bhogaonkar@everestek.com",
           // "rahul.varma@everestek.com",
         ], //* Ex. toAddress: [rmEmail, empEmail]
         source: "hubnotifications@everestek.com",
-        subject: `${email?.employeeName} - Weekly Attendance Report [${email?.weekRange}]`,
-        htmlTemplate: email?.emailTemplate || "-",
+        subject: `${employeeName} - Weekly Attendance Report [${weekRange}]`,
+        htmlTemplate: emailTemplate || "-",
       });
     }
     return {

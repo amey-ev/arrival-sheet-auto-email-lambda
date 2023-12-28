@@ -9,7 +9,7 @@ const getRMEmail = (employeeId, resourceDetailsResponse) => {
       );
     return {
       rmEmail: obtainedResourceObject?.manager?.email || "-",
-      empEmail: obtainedResourceObject?.email,
+      empEmail: obtainedResourceObject?.email || "-",
     };
   }
 };
