@@ -87,16 +87,21 @@ exports.handler = async (event) => {
       //TODO: At prod. change the toAddresses to rmEmail,empEmail
       const { rmEmail, empEmail, employeeName, weekRange, emailTemplate } =
         email;
-      console.log("Template: ", emailTemplate);
-      await sendSESEmails({
-        toAddresses: [
-          "amey.bhogaonkar@everestek.com",
-          // "rahul.varma@everestek.com",
-        ], //* Ex. toAddress: [rmEmail, empEmail]
-        source: "hubnotifications@everestek.com",
-        subject: `${employeeName} - Weekly Attendance Report [${weekRange}]`,
-        htmlTemplate: emailTemplate || "-",
-      });
+      if (rmEmail !== "-" && empEmail !== "-") {
+        await sendSESEmails({
+          toAddresses: [
+            "amey.bhogaonkar@everestek.com",
+            // "rahul.varma@everestek.com",
+          ], //* Ex. toAddress: [rmEmail, empEmail]
+          source: "hubnotifications@everestek.com",
+          subject: `${employeeName} - Weekly Attendance Report [${weekRange}]`,
+          htmlTemplate: emailTemplate || "-",
+        });
+      } else {
+        console.log(
+          `${employeeId} does not have RM Email or his/her own email`
+        );
+      }
     }
     return {
       statusCode: 200,
