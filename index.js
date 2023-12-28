@@ -85,7 +85,7 @@ exports.handler = async (event) => {
           "rahul.varma@everestek.com",
         ], //* Ex. toAddress: [rmEmail, empEmail]
         source: "hubnotifications@everestek.com",
-        subject: `Weekly Attendance Report of ${email?.employeeName} for [${email?.weekRange}]`,
+        subject: `${email?.employeeName} - Weekly Attendance Report [${email?.weekRange}]`,
         htmlTemplate: email?.emailTemplate || "-",
       });
     }

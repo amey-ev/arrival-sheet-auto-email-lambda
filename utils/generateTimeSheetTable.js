@@ -58,7 +58,7 @@ const generateTimeSheetTableTemplate = (employeeTimeArray, employeeName) => {
                   ) {
                     calculatedType = "WFO";
                   } else {
-                    calculatedType = "WFO/WFH/Leave";
+                    calculatedType = "WFH/Leave/Holiday";
                     employee["In Time"] = "00:00";
                     employee["Out Time"] = "00:00";
                     employee["Effective Hours"] = "00:00";
