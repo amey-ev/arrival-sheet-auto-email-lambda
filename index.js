@@ -10,6 +10,7 @@ const sendSESEmails = require("./utils/sendSESEmail");
 
 exports.handler = async (event) => {
   try {
+    // ? Is this the correct endpoint for PROD.
     const resourceDetails = await fetchData(
       "https://alb-dev-hub.everestek.com/hub/hub-services/v1/resources/details/"
     );
@@ -81,25 +82,20 @@ exports.handler = async (event) => {
         weekRange,
       });
     });
-
     for (const email of sendEmailArray) {
-      //TODO: Change slicedEmailArray to sendEmailArray AfterTesting
       //TODO: At prod. change the toAddresses to rmEmail,empEmail
       const { rmEmail, empEmail, employeeName, weekRange, emailTemplate } =
         email;
       if (rmEmail !== "-" && empEmail !== "-") {
         await sendSESEmails({
-          toAddresses: [
-            "amey.bhogaonkar@everestek.com",
-            // "rahul.varma@everestek.com",
-          ], //* Ex. toAddress: [rmEmail, empEmail]
+          toAddresses: ["amey.bhogaonkar@everestek.com", rmEmail, empEmail], //TODO: Remove amey.bhogaonkar@everestek.com
           source: "hubnotifications@everestek.com",
           subject: `${employeeName} - Weekly Attendance Report [${weekRange}]`,
           htmlTemplate: emailTemplate || "-",
         });
       } else {
         console.log(
-          `${employeeId} does not have RM Email or his/her own email`
+          `${employeeName} does not have RM Email or his/her own email`
         );
       }
     }
