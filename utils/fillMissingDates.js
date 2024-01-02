@@ -42,8 +42,6 @@ const fillMissingDates = (inputArray) => {
   });
   const { firstDay, lastDay } = getWeekRange(firstOccuranceOfDate.Date);
   const dateArray = generateDatesInRange(firstDay, lastDay);
-  dateArray.shift();
-  dateArray.pop();
   const arrayWithDateInserted = inputArray.map((item, index) => {
     return {
       ...item,
@@ -51,6 +49,8 @@ const fillMissingDates = (inputArray) => {
     };
   });
 
+  arrayWithDateInserted.shift();
+  arrayWithDateInserted.pop();
   return arrayWithDateInserted;
 };
 

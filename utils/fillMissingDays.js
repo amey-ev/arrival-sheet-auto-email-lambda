@@ -1,4 +1,12 @@
-const workDaysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const workDaysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 const findMissingDaysAndInsert = (inputArray, placeholderObject) => {
   const dataMap = new Map(inputArray.map((item) => [item.Day, item]));
