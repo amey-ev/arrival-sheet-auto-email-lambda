@@ -83,6 +83,7 @@ exports.handler = async (event) => {
         weekRange,
       });
     });
+    console.log("Started sending email....");
     for (const email of sendEmailArray) {
       const { rmEmail, empEmail, employeeName, weekRange, emailTemplate } =
         email;
@@ -99,6 +100,7 @@ exports.handler = async (event) => {
         );
       }
     }
+    console.log("Sending of email completed !!!");
     return {
       statusCode: 200,
       body: JSON.stringify({ message: "Email Sent Successfully" }),
