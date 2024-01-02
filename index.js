@@ -9,11 +9,10 @@ const generateEmpNotPresentTemplate = require("./utils/generateEmpNotPresentTemp
 const sendSESEmails = require("./utils/sendSESEmail");
 
 exports.handler = async (event) => {
+  const ENDPOINT = process.env.ENDPOINT || "https://alb-dev-hub.everestek.com"; //Default endpoint to dev
   try {
-    //INFO PROD Enpoint : https://alb-hub.everestek.com/hub/hub-services/v1/resources/details/
-    //INFO  DEV Endpint : https://alb-dev-hub.everestek.com/hub/hub-services/v1/resources/details/
     const resourceDetails = await fetchData(
-      "https://alb-hub.everestek.com/hub/hub-services/v1/resources/details/"
+      `${ENDPOINT}/hub/hub-services/v1/resources/details/`
     );
     const sendEmailArray = []; // Call this array on-loop to send email
     const bucket = event.Records[0].s3.bucket.name;
