@@ -84,12 +84,11 @@ exports.handler = async (event) => {
       });
     });
     for (const email of sendEmailArray) {
-      //TODO: At prod. change the toAddresses to rmEmail,empEmail
       const { rmEmail, empEmail, employeeName, weekRange, emailTemplate } =
         email;
       if (rmEmail !== "-" && empEmail !== "-") {
         await sendSESEmails({
-          toAddresses: ["amey.bhogaonkar@everestek.com", rmEmail, empEmail], //TODO: Remove amey.bhogaonkar@everestek.com
+          toAddresses: [rmEmail, empEmail],
           source: "hubnotifications@everestek.com",
           subject: `${employeeName} - Weekly Attendance Report [${weekRange}]`,
           htmlTemplate: emailTemplate || "-",
