@@ -10,9 +10,10 @@ const sendSESEmails = require("./utils/sendSESEmail");
 
 exports.handler = async (event) => {
   try {
-    // ? Is this the correct endpoint for PROD.
+    //INFO PROD Enpoint : https://alb-hub.everestek.com/hub/hub-services/v1/resources/details/
+    //INFO  DEV Endpint : https://alb-dev-hub.everestek.com/hub/hub-services/v1/resources/details/
     const resourceDetails = await fetchData(
-      "https://alb-dev-hub.everestek.com/hub/hub-services/v1/resources/details/"
+      "https://alb-hub.everestek.com/hub/hub-services/v1/resources/details/"
     );
     const sendEmailArray = []; // Call this array on-loop to send email
     const bucket = event.Records[0].s3.bucket.name;
@@ -95,7 +96,7 @@ exports.handler = async (event) => {
         });
       } else {
         console.log(
-          `${employeeName} does not have RM Email or his/her own email`
+          `${employeeName} does not have RM Email or his/her own email.`
         );
       }
     }
