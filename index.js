@@ -7,6 +7,7 @@ const fillMissingDates = require("./utils/fillMissingDates");
 const checkIfEmpIsPresentAllDay = require("./utils/checkIfEmpIsPresentAllDay");
 const generateEmpNotPresentTemplate = require("./utils/generateEmpNotPresentTemplate");
 const sendSESEmails = require("./utils/sendSESEmail");
+const AddColorAccordingToTotalHours = require("./utils/AddColorToTotalHours");
 
 exports.handler = async (event) => {
   const ENDPOINT = process.env.ENDPOINT || "https://alb-dev-hub.everestek.com"; //Default endpoint to dev
@@ -33,6 +34,7 @@ exports.handler = async (event) => {
       const reportingManagerName = datum["Reporting Manager"] || "";
       let weekRange = "-";
       const employeeReportingManagerName = datum["Reporting Manager"];
+
       const filteredDataFromTimeSheet = s3Object.filter((datum) => {
         if (datum[arrayUniqueKey] === employeeId) {
           return datum;
@@ -46,7 +48,7 @@ exports.handler = async (event) => {
       if (checkIfEmpIsPresentAllDay(timeSheetDataWithMissingDays)) {
         const { missingDateEmailTemplate, missingDateWeekRange } =
           generateEmpNotPresentTemplate(
-            timeSheetDataWithMissingDays,
+            AddColorAccordingToTotalHours(timeSheetDataWithMissingDays),
             employeeName,
             reportingManagerName,
             employeeId
@@ -58,7 +60,7 @@ exports.handler = async (event) => {
           timeSheetDataWithMissingDays
         );
         emailTemplate = generateTimeSheetTableTemplate(
-          timeSheetWithMissingDates,
+          AddColorAccordingToTotalHours(timeSheetWithMissingDates),
           employeeName,
           reportingManagerName,
           employeeId
