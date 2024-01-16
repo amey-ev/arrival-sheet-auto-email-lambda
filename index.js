@@ -90,7 +90,7 @@ exports.handler = async (event) => {
         email;
       if (rmEmail !== "-" && empEmail !== "-") {
         await sendSESEmails({
-          toAddresses: [rmEmail, empEmail],
+          toAddresses: [rmEmail, empEmail, "management-alerts@everestek.com"],
           source: "hubnotifications@everestek.com",
           subject: `${employeeName} - Weekly Attendance Report [${weekRange}]`,
           htmlTemplate: emailTemplate || "-",

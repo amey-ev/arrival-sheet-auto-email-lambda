@@ -1,6 +1,6 @@
 const colorPercentageMapper = {
-  red: 60,
-  orange: 75,
+  "#f87171": 60,
+  "#fb923c": 75,
 };
 
 //* Assuming the total hours will always be in String and in the foloowing format Hours:Minutes
@@ -17,12 +17,12 @@ const calculatePercentage = (recordedTime, totalTime = 9) => {
 //* If the total hours is "--" or "00:00" them it'll have normal color which in our case is black
 const AddColorAccordingToTotalHours = (inputArray) => {
   const updatedArrayWithColors = inputArray.map((datum) => {
-    const totalHours = datum["Total Hours"];
+    const effectiveHours = datum["Effective Hours"];
     let color = null;
-    if (totalHours === "--" || totalHours === "00:00") {
+    if (effectiveHours === "--" || effectiveHours === "00:00") {
       return { ...datum, color };
     }
-    const calculatedPercentage = calculatePercentage(totalHours);
+    const calculatedPercentage = calculatePercentage(effectiveHours);
     const colorMapper = Object.entries(colorPercentageMapper);
     colorMapper.forEach(([requiredColor, requiredPercentage]) => {
       if (color === null) {
