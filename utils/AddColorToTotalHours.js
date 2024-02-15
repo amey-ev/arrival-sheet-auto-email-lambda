@@ -15,7 +15,7 @@ const calculatePercentage = (recordedTime, totalTime = 8) => {
 };
 
 //* If the total hours is "--" or "00:00" them it'll have normal color which in our case is black
-const AddColorAccordingToTotalHours = (inputArray) => {
+const addColorAccordingToTotalHours = (inputArray) => {
   const updatedArrayWithColors = inputArray.map((datum) => {
     const effectiveHours = datum["Effective Hours"];
     let color = null;
@@ -36,4 +36,4 @@ const AddColorAccordingToTotalHours = (inputArray) => {
   return updatedArrayWithColors;
 };
 
-module.exports = AddColorAccordingToTotalHours;
+module.exports = addColorAccordingToTotalHours;

@@ -8,13 +8,13 @@
 //                       <td style="border: 1px solid #000000;height: 60px; width: 140px; text-align: center; vertical-align: middle; border: 1px solid #000000;">${
 //                         employee["Reporting Manager"] || "-"
 //                       }</td> */}
+const calculateAverageEffectivHours = require("./calculateAverageEffectiveHours");
 const generateTimeSheetTableTemplate = (
   employeeTimeArray,
   employeeName,
   reportingManagerName,
   employeeId
 ) => {
-  console.log("employeeName: ", employeeName, employeeTimeArray);
   const tableHeaders = [
     "Date",
     "Day",
@@ -27,7 +27,8 @@ const generateTimeSheetTableTemplate = (
     "Effective Hours",
     "Total Hours",
   ];
-
+  const averageEffectiveHours =
+    calculateAverageEffectivHours(employeeTimeArray);
   const timeSheetTableTemplate = `
     <html>
       <body style="display: block";>
@@ -42,6 +43,9 @@ const generateTimeSheetTableTemplate = (
         </p>
         <p>
           <b>Resource Manager :</b> ${reportingManagerName}
+        </p>
+        <p>
+          <b>Average Effective Hours :</b> ${averageEffectiveHours}
         </p>
         <table style="width: 100%; border-collapse: collapse;">
           <thead>
