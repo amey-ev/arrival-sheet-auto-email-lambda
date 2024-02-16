@@ -3,8 +3,8 @@ const colorPercentageMapper = {
   "#fb923c": 87,
 };
 
-//* Assuming the total hours will always be in String and in the foloowing format Hours:Minutes
-const calculatePercentage = (recordedTime, totalTime = 8) => {
+//* Assuming the total hours will always be in String and in the following format Hours:Minutes
+const calculatePercentage = (recordedTime, totalTime = 9) => {
   if (!recordedTime.includes(":")) {
     return 0;
   }
